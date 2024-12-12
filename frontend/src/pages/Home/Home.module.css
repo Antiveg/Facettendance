@@ -1,0 +1,16 @@
+.base {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 80px 30px 80px;
+    width: 100vw;
+    flex: 1;
+    gap: 20px;
+}
+
+.cardContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-rows: auto;
+    gap: 20px;
+    overflow: visible;
+}

@@ -1,0 +1,36 @@
+.nav {
+    width: 100%;
+    padding: 80px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #333333;
+    color: #FFFFFF;
+    display: flex;
+    gap: 30px;
+    position: fixed;
+    top: 0;
+}
+
+.navItem {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.authentication {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    padding: 0 20px 0  20px;
+    width: 125px;
+    background-color: white;
+    border: none;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

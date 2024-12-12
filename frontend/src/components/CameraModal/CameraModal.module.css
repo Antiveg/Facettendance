@@ -1,0 +1,92 @@
+.base {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.body {
+    background-color: white;
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    padding: 40px;
+    gap: 40px;
+    position: relative;
+}
+
+.exit_btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: none;
+}
+
+.left_part, .right_part {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.left_part {
+    width: 40%;
+    min-width: 200px;
+}
+
+.right_part {
+    flex: 1;
+    background-color: rgba(167, 167, 167, 0.3);
+}
+
+.notice {
+    flex: 1;
+    padding: 0 20px 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo_btn {
+    width: 50%;
+    height: 40px;
+    margin-top: 20px;
+}
+
+.base_details {
+    display: flex;
+    flex-direction: row;
+    height: 225px;
+    width: 100%;
+    gap: 10px;
+}
+
+.map_img {
+    object-fit: cover;
+    aspect-ratio: 1;
+    height: 100%;
+}
+
+.details {
+    width: 100%;
+}
+
+.description {
+    flex: 1;
+    width: 100%;
+}

@@ -1,6 +1,6 @@
 // EventParticipants Model (EventParticipants.js)
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('./db');  // Your Sequelize connection
+const sequelize = require('../db');  // Your Sequelize connection
 
 // Define the EventParticipants model
 const EventParticipants = sequelize.define('EventParticipants', {
@@ -27,13 +27,13 @@ const EventParticipants = sequelize.define('EventParticipants', {
     timestamps: true,
 });
 
-// Define the relationships
-// User (many) to EventParticipants (many) -> Event
 EventParticipants.associate = (models) => {
-    // Each user can have many event collaborations
-    EventParticipants.belongsTo(models.User, { foreignKey: 'userId' });
-    // Each event can have many Participants
-    EventParticipants.belongsTo(models.Event, { foreignKey: 'eventId' });
+    EventParticipants.belongsTo(models.User, { 
+        foreignKey: 'userId' 
+    });
+    EventParticipants.belongsTo(models.Event, { 
+        foreignKey: 'eventId' 
+    });
 };
 
 // Export the EventParticipants model

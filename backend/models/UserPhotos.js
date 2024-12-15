@@ -1,6 +1,6 @@
 // UserPhotos Model (simplified)
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('./db');  // Your Sequelize connection
+const sequelize = require('../db');  // Your Sequelize connection
 
 const UserPhotos = sequelize.define('UserPhotos', {
     userId: {
@@ -20,9 +20,10 @@ const UserPhotos = sequelize.define('UserPhotos', {
     },
 });
 
-// Relationships
-const User = sequelize.models.User;
-User.hasMany(UserPhotos, { foreignKey: 'userId' });
-UserPhotos.belongsTo(User, { foreignKey: 'userId' });
+UserPhotos.associate = (models) => {
+    UserPhotos.belongsTo(models.User, {
+        foreignKey: 'userId',
+    });
+};
 
 module.exports = UserPhotos;

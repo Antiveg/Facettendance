@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('events', {
+    await queryInterface.createTable('Events', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,  // This is the primary key
@@ -31,7 +31,7 @@ module.exports = {
       creatorId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'users',  // References the 'users' table
+          model: 'Users',  // References the 'users' table
           key: 'id',  // Referencing the 'id' column of the 'users' table
         },
         allowNull: false,  // Creator ID cannot be null
@@ -52,6 +52,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     // Rollback: Drop the 'events' table
-    await queryInterface.dropTable('events');
+    await queryInterface.dropTable('Events');
   }
 };

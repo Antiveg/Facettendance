@@ -8,7 +8,8 @@ const Layout: React.FC = () => {
     const location = useLocation();
 
     // Check if the current route is 'login' or 'register'
-    const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+    // const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+    const isAuthPage = false
 
     return (
         <div className={styles.base}>

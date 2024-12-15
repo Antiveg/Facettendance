@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 // import axios from 'axios';
 import '../../global.css'
 import styles from './Login.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 // Define the interface for the login form data
 interface LoginFormData {
@@ -11,19 +12,13 @@ interface LoginFormData {
 }
 
 const Login: React.FC = () => {
-    // Define state to manage form input values
+
+    const navigate = useNavigate()
     const [formData, setFormData] = useState<LoginFormData>({
         email: '',
         password: '',
     });
 
-    // Define state to manage errors
-    const [errors, setErrors] = useState<Partial<LoginFormData>>({
-        email: '',
-        password: '',
-    });
-
-    // Define state for loading and success/error messages
     const [loading, setLoading] = useState(false);
     const [loginError, setLoginError] = useState('');
 
@@ -36,58 +31,24 @@ const Login: React.FC = () => {
         });
     };
 
-    // Validate form inputs
-    const validateForm = (): boolean => {
-        let valid = true;
-        let newErrors: Partial<LoginFormData> = {};
-
-        if (!formData.email) {
-            newErrors.email = 'email is required';
-            valid = false;
-        }
-
-        if (!formData.password) {
-            newErrors.password = 'Password is required';
-            valid = false;
-        }
-
-        setErrors(newErrors);
-        return valid;
-    };
-
-    // Handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        // Clear previous error messages
-        setLoginError('');
-
-        // Validate the form
-        if (!validateForm()) {
-            return;
-        }
-
-        setLoading(true);
-
         try {
-            // Example of making a POST request to a backend for login
-            // Replace this URL with your actual login API endpoint
-            //   const response = await axios.post('/api/login', {
-            //     name: formData.name,
-            //     password: formData.password,
-            //   });
+            e.preventDefault();
+            setLoginError('');
+            setLoading(true);
 
-            // Simulate successful login response
-            // console.log('Login Successful:', response.data);
+            const response = await axios.post('http://localhost:5000/auth/login', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            localStorage.setItem('user', JSON.stringify(response.data.user));
 
-            // You can redirect the user after successful login (use React Router for this)
-            // Example: navigate('/dashboard'); // If you are using react-router
-            // Or store the user's data in localStorage or a global state
-            setLoading(false);
+            navigate('/home')
         } catch (error) {
-            setLoading(false);
-            setLoginError('Login failed. Please check your credentials.');
-            console.error('Error during login:', error);
+            setLoginError('Login failed. Please check your credentials.')
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -106,7 +67,6 @@ const Login: React.FC = () => {
                         className={styles.input_box}
                         placeholder="Enter your email"
                     />
-                    {errors.email && <span className="error">{errors.email}</span>}
                 </div>
                 <div className={styles.input_set}>
                     <label htmlFor="password" className={styles.label}>Password</label>
@@ -119,21 +79,19 @@ const Login: React.FC = () => {
                         className={styles.input_box}
                         placeholder="Enter your password"
                     />
-                    {errors.password && <span className="error">{errors.password}</span>}
                 </div>
 
-                {/* Error Message */}
                 {loginError && <div className="error-message">{loginError}</div>}
 
-                {/* Submit Button */}
                 <button
                 type="submit"
                 disabled={loading}
                 className={styles.btn}>
                 {loading ? 'Logging in...' : 'Login'}
                 </button>
+
                 <p className={styles.link}>
-                Don't have an account yet? <Link to="/register">Register Here!</Link>
+                    Don't have an account yet? <Link to="/register">Register Here!</Link>
                 </p>
             </form>
         </div>

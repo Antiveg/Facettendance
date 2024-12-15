@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import '../../global.css'
 import styles from './Create.module.css'
+import axios from 'axios'
+
+interface UserData {
+    id: number,
+    name: string,
+}
 
 const Create: React.FC = () => {
+
+    const [users, setUsers] = useState<UserData[] | null>(null)
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [eventData, setEventData] = useState({
         title: '',
@@ -10,64 +19,61 @@ const Create: React.FC = () => {
         start_time: '',
         end_time: '',
         location: '',
-        creator: '',
-        // collaborators: [],
-        // participants: []
+        creator: 1,
+        participants: [] as number[]
     });
 
-    // State for form validation and error messages
-    const [errors, setErrors] = useState<any>({});
-    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                setLoading(true)
+                const response = await axios.get('http://localhost:5000/users');
+                setUsers(response.data.users);
+            } catch (err) {
+                console.error('Error fetching users:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUsers();
+    }, []);
 
-    // Handle input change
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setEventData({
-        ...eventData,
-        [name]: value,
+            setEventData({
+            ...eventData,
+            [name]: value,
         });
     };
 
-    // Form validation
-    const validateForm = () => {
-        let formErrors: any = {};
-        if (!eventData.title) formErrors.title = 'Title is required';
-        if (!eventData.description) formErrors.description = 'Description is required';
-        if (!eventData.start_time) formErrors.start_time = 'Start time is required';
-        if (!eventData.end_time) formErrors.end_time = 'End time is required';
-        if (!eventData.location) formErrors.location = 'Location is required';
-        if (!eventData.creator) formErrors.location = 'Creator is required';
-        return formErrors;
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
+        const checkboxes = document.querySelectorAll<HTMLInputElement>('input[name="participants"]:checked');
+        const checkedValues = Array.from(checkboxes).map((checkbox) => Number(checkbox.value));
+
+        const updatedEventData = {
+            ...eventData,  // Copy the existing data
+            participants: checkedValues,  // Update the participants field
+        };
+
         e.preventDefault();
-    
-        // Clear previous errors
-        setErrors({});
-    
-        // Validate form data
-        const formErrors = validateForm();
-        if (Object.keys(formErrors).length > 0) {
-        setErrors(formErrors);
-        return;
-        }
-    
         try {
             setLoading(true);
-        
-            // Sending data to the backend
-            // const response = await axios.post('/api/events', eventData);
-            // console.log('Event created:', response.data);
-        
-            // Clear the form
+            console.log(updatedEventData)
+
+            const response = await axios.post('http://localhost:5000/event/create', updatedEventData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            
             setEventData({
                 title: '',
                 description: '',
                 start_time: '',
                 end_time: '',
                 location: '',
-                creator: '',
+                creator: 1,
+                participants: []
             });
         } catch (error) {
             console.error('Error creating event:', error);
@@ -92,31 +98,28 @@ const Create: React.FC = () => {
                             onChange={handleChange}
                             className={styles.input_box}
                             />
-                            {errors.title && <span className="error">{errors.title}</span>}
                         </div>
                         <div className={styles.input_container}>
                             <label htmlFor="start_time">Start Time</label>
-                            <input
-                            type="datetime-local"
-                            id="start_time"
-                            name="start_time"
-                            value={eventData.start_time}
-                            onChange={handleChange}
-                            className={styles.input_box}
-                            />
-                            {errors.start_time && <span className="error">{errors.start_time}</span>}
-                        </div>
-                        <div className={styles.input_container}>
-                            <label htmlFor="end_time">End Time</label>
-                            <input
-                            type="datetime-local"
-                            id="end_time"
-                            name="end_time"
-                            value={eventData.end_time}
-                            onChange={handleChange}
-                            className={styles.input_box}
-                            />
-                            {errors.end_time && <span className="error">{errors.end_time}</span>}
+                            <div className={styles.multiple_input}>
+                                <input
+                                type="datetime-local"
+                                id="start_time"
+                                name="start_time"
+                                value={eventData.start_time}
+                                onChange={handleChange}
+                                className={styles.datetime_box}
+                                />
+                                <p> s.d. </p>
+                                <input
+                                type="datetime-local"
+                                id="end_time"
+                                name="end_time"
+                                value={eventData.end_time}
+                                onChange={handleChange}
+                                className={styles.datetime_box}
+                                />
+                            </div>
                         </div>
                         <div className={styles.input_container}>
                             <label htmlFor="description">Description</label>
@@ -127,19 +130,17 @@ const Create: React.FC = () => {
                             onChange={handleChange}
                             className={styles.textarea_box}
                             />
-                            {errors.description && <span className="error">{errors.description}</span>}
                         </div>
                         <div className={styles.input_container}>
                             <label htmlFor="creator">Creator</label>
                             <input
-                            type="text"
-                            id="creator"
-                            name="creator"
-                            value={eventData.creator}
-                            onChange={handleChange}
-                            className={styles.input_box}
+                                type="text"
+                                id="creator"
+                                name="creator"
+                                value="1"
+                                readOnly
+                                className={styles.input_box}
                             />
-                            {errors.creator && <span className="error">{errors.creator}</span>}
                         </div>
                         <div className={styles.input_container}>
                             <label htmlFor="location">Location</label>
@@ -151,7 +152,24 @@ const Create: React.FC = () => {
                             onChange={handleChange}
                             className={styles.input_box}
                             />
-                            {errors.location && <span className="error">{errors.location}</span>}
+                        </div>
+                        <div className={styles.input_container}>
+                            <label htmlFor="participants">Participants</label>
+                            <div className={styles.checkbox_box}>
+                                {(users && users.length > 0) &&
+                                users.map((user) => (
+                                    <label key={user.id} className={styles.checkbox_container}>
+                                        <input
+                                        type="checkbox"
+                                        id={`participant-${user.id}`}
+                                        name="participants"
+                                        value={user.id}
+                                        onChange={handleChange}
+                                        />
+                                        <p className="ellipsis">{user.id}. {user.name}</p>
+                                    </label>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <div className={styles.right_side}>

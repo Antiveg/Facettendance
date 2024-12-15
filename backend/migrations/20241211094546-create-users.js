@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('Users', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -39,6 +39,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     // If rolling back the migration, drop the 'users' table
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('Users');
   }
 };

@@ -1,48 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import EventCard from '../../components/EventCard/EventCard'
 import styles from './Home.module.css'
 import '../../global.css'
+import axios from 'axios'
+
+interface EventData {
+    id: number,
+    title: string,
+    start_time: string,
+    end_time: string,
+    location: string,
+    creator: string,
+    status: boolean,
+}
 
 const Home: React.FC = () => {
 
-    const data = [
-        {
-            id: 1,
-            title: "Introduction to OOP",
-            start_time: "01:00:00",
-            end_time: "02:00:00",
-            location: "binus alsut",
-            creator: "pak felix",
-            status: false,
-        },
-        {
-            id: 1,
-            title: "Introduction to Computational Physics",
-            start_time: "02:00:00",
-            end_time: "03:00:00",
-            location: "binus alsut",
-            creator: "pak felix",
-            status: false,
-        },
-        {
-            id: 1,
-            title: "Introduction to Computer Network",
-            start_time: "01:00:00",
-            end_time: "02:00:00",
-            location: "binus alsut",
-            creator: "pak felix",
-            status: false,
-        },
-        {
-            id: 1,
-            title: "Introduction to Algorithm Design & Analysis",
-            start_time: "01:00:00",
-            end_time: "02:00:00",
-            location: "binus alsut",
-            creator: "pak felix",
-            status: false,
-        }
-    ]
+    const [data, setData] = useState<EventData[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true)
+                const response = await axios.get('http://localhost:5000/events');
+                setData(response.data.events);
+            } catch (error) {
+                console.log('Error fetching user-related events', error);
+            } finally {
+                setLoading(false)
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <div className={styles.base}>
@@ -51,9 +41,12 @@ const Home: React.FC = () => {
                 <p>Here's where all events related to you appear!</p>
             </div>
             <div className={styles.cardContainer}>
-                {data.map((event) => (
+                {(data && data.length > 0) && 
+                data.map((event : EventData) => (
                     <EventCard key={event.id} data={event} />
                 ))}
+                {(!data || data.length <= 0) && 
+                <div><h2>No Event Yet...</h2></div>}
             </div>
         </div>
     );
@@ -80,3 +73,42 @@ export default Home;
 //         participants: ["Felix", "Maya", "Kiki"]
 //     }
 // ]
+
+    // const data = [
+    //     {
+    //         id: 1,
+    //         title: "Introduction to OOP",
+    //         start_time: "01:00:00",
+    //         end_time: "02:00:00",
+    //         location: "binus alsut",
+    //         creator: "pak felix",
+    //         status: false,
+    //     },
+    //     {
+    //         id: 1,
+    //         title: "Introduction to Computational Physics",
+    //         start_time: "02:00:00",
+    //         end_time: "03:00:00",
+    //         location: "binus alsut",
+    //         creator: "pak felix",
+    //         status: false,
+    //     },
+    //     {
+    //         id: 1,
+    //         title: "Introduction to Computer Network",
+    //         start_time: "01:00:00",
+    //         end_time: "02:00:00",
+    //         location: "binus alsut",
+    //         creator: "pak felix",
+    //         status: false,
+    //     },
+    //     {
+    //         id: 1,
+    //         title: "Introduction to Algorithm Design & Analysis",
+    //         start_time: "01:00:00",
+    //         end_time: "02:00:00",
+    //         location: "binus alsut",
+    //         creator: "pak felix",
+    //         status: false,
+    //     }
+    // ]

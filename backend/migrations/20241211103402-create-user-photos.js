@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     // Create the user_photos table
-    await queryInterface.createTable('user_photos', {
+    await queryInterface.createTable('UserPhotos', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',  // Reference the 'users' table
+          model: 'Users',  // Reference the 'users' table
           key: 'id',  // The 'id' column in the 'users' table
         },
       },
@@ -36,6 +36,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     // Rollback: Drop the 'user_photos' table
-    await queryInterface.dropTable('user_photos');
+    await queryInterface.dropTable('UserPhotos');
   }
 };

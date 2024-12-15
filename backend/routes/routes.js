@@ -1,26 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const authenticate = require('../middlewares/authenticate')
+// const authenticate = require('../middlewares/authenticate')
 const errorHandler = require('../middlewares/errorHandling')
 const { login, register, logout } = require('../controllers/authController')
+const { getAllEvents, getEventById, createEvent, getEventsByUserId } = require('../controllers/eventController')
+const { createUser, getUserById, getAllUsers } = require('../controllers/userController')
 
 router.post('/auth/login', login)
 router.post('/auth/register', register)
 
-router.use(authenticate)
+// router.use(authenticate)
 router.get('/auth/logout', logout)
+router.get('/events', getAllEvents)
+router.get('/event/:id', getEventById)
+router.get('/events/user', getEventsByUserId)
+router.post('/event/create', createEvent)
+router.post('/user/create', createUser)
+router.get('/user/:id', getUserById)
+router.get('/users', getAllUsers)
 
 router.use(errorHandler)
 
 module.exports = router;
-
-// const storage = multer.diskStorage({ // Setup Multer storage configuration
-//     destination: (req, file, cb) => {
-//         cb(null, './uploads');  // Store files in the "uploads" folder
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + path.extname(file.originalname));  // Unique filename
-//     },
-// });
-// const upload = multer({ storage: storage });

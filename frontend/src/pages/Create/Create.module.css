@@ -40,19 +40,49 @@
 .input_container {
     width: 100%;
     height: fit-content;
+    max-height: 200px;
+    overflow-y: auto;
     display: flex;
     flex-direction: row;
-    /* background-color: red; */
     justify-content: space-between;
 }
 
-.input_box, .textarea_box{
+.input_box, .textarea_box, .checkbox_box  {
     width: 70%;
+    max-width: 600px;
     height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 2px 10px 2px 10px;
+}
+
+.checkbox_box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    overflow-y: auto;
+    height: 100px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.datetime_box {
+    width: 45%;
+    padding: 2px 10px 2px 10px;
 }
 
 .textarea_box {
-    height: 200px;
+    height: 100px;
+}
+
+.multiple_input {
+    width: 70%;
+    max-width: 600px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .map {
@@ -68,4 +98,16 @@
     height: 40px;
     margin-top: 20px;
     align-self: center;
+}
+
+.checkbox_container {
+    width: 100%;
+    min-width: 100px;
+    height: fit-content;
+    background-color: rgba(167, 167, 167, 0.2);
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
 }

@@ -8,8 +8,10 @@
 }
 
 .cardContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    /* display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); */
+    display: flex;
+    flex-direction: column;
     grid-template-rows: auto;
     gap: 20px;
     overflow: visible;

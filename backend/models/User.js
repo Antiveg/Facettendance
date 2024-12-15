@@ -1,30 +1,47 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../db');  // Sequelize instance
+const sequelize = require('../db');
+const UserPhotos = require('./UserPhotos')
+const Event = require('./Event')
+const EventParticipants = require('./EventParticipants')
 
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,  // This is the primary key
-        autoIncrement: true,  // Automatically increments the id value
+        primaryKey: true,
+        autoIncrement: true,
     },
     name: {
-        type: DataTypes.STRING,  // Store the name as a string
-        allowNull: false,  // Name cannot be null
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     password: {
-        type: DataTypes.STRING,  // Store the password as a string (hashed password ideally)
-        allowNull: false,  // Password cannot be null
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     email: {
-        type: DataTypes.STRING,  // Store the password as a string (hashed password ideally)
-        allowNull: false,  // Password cannot be null
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     face_data: {
         type: DataTypes.ARRAY(DataTypes.FLOAT),
         allowNull: true, 
     },
 }, {
-    timestamps: true,  // Creates 'createdAt' and 'updatedAt' fields automatically
+    timestamps: true,
 });
+
+User.associate = (models) => {
+    User.hasMany(UserPhotos, {
+        foreignKey: 'userId', 
+    });
+    User.hasMany(Event, {
+        foreignKey: 'creatorId',
+    });
+    User.belongsToMany(Event, {
+        through: EventParticipants,
+        foreignKey: 'userId',
+        otherKey: 'eventId',
+    });
+};
 
 module.exports = User;

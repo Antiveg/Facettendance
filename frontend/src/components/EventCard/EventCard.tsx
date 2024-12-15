@@ -27,11 +27,9 @@ const EventCard: React.FC<EventCardProps> = ({data}) => {
                 <hr />
                 <p className="small-text">Location : {data.location}</p>
                 <p className="small-text">Time : {data.start_time} s.d. {data.end_time}</p>
-                <p className="small-text">Made by : {data.creator} </p>
-                <p className="small-text">Status   : {data.status}</p>
+                <p className="small-text">Made by : Admin</p>
             </div>
             <button className={styles.attendBtn} onClick={toggleVisibility}>
-                {/* <img className={styles.attendBtnLogo} src={data.attend_img} alt="not found..." /> */}
                 <p>{data.status}</p>
             </button>
             { modalVisible && <CameraModal onClose={toggleVisibility} id={data.id}/>}

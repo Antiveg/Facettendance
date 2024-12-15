@@ -1,47 +1,52 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../db');  // Your Sequelize connection
+const sequelize = require('../db');
+const User = require('./UserPhotos')
+const EventParticipants = require('./EventParticipants')
 
-// Define the Event model
 const Event = sequelize.define('Event', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,  // Auto-increment ID
+        autoIncrement: true,
     },
     title: {
         type: DataTypes.STRING,
-        allowNull: false,  // Event title cannot be null
+        allowNull: false,
     },
     start_time: {
-        type: DataTypes.DATE,  // Date and Time for start
-        allowNull: false,  // Start time is required
+        type: DataTypes.DATE,
+        allowNull: false,
     },
     end_time: {
-        type: DataTypes.DATE,  // Date and Time for end
-        allowNull: false,  // End time is required
+        type: DataTypes.DATE,
+        allowNull: false,
     },
     location: {
-        type: DataTypes.STRING,  // Store location as a string (could be address or coordinates)
-        allowNull: false,  // Location is required
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     description: {
-        type: DataTypes.TEXT,  // Allow longer text for description
-        allowNull: true,  // Description is optional
+        type: DataTypes.TEXT,
+        allowNull: true, 
     },
     creatorId: {
         type: DataTypes.INTEGER,
-        allowNull: false,  // Creator ID is required
-        references: { model: 'User', key: 'id' },  // Foreign key to the User table (creator of the event)
-    },
-    timestamp: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.NOW,  // Automatically set the timestamp to current time
         allowNull: false,
+        references: { model: 'User', key: 'id' },
     },
 }, {
-    // Optionally, add timestamps for createdAt and updatedAt
     timestamps: true,
 });
 
-// Export the Event model
+Event.associate = (models) => {
+    Event.belongsTo(User, {
+        foreignKey: 'creatorId',
+    });
+    Event.belongsToMany(User, {
+        through: EventParticipants,
+        foreignKey: 'eventId',
+        otherKey: 'userId',
+    });
+};
+
 module.exports = Event;

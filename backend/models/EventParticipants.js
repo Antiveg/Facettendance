@@ -1,29 +1,26 @@
-// EventParticipants Model (EventParticipants.js)
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../db');  // Your Sequelize connection
+const sequelize = require('../db');
 
-// Define the EventParticipants model
 const EventParticipants = sequelize.define('EventParticipants', {
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: { model: 'Users', key: 'id' },  // Foreign key to User model
+        references: { model: 'Users', key: 'id' },
     },
     eventId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: { model: 'Events', key: 'id' },  // Foreign key to Event model
+        references: { model: 'Events', key: 'id' },
     },
     img_proof: {
-        type: DataTypes.STRING,  // Store the image proof (could be a URL or file path)
-        allowNull: true,  // img_proof is optional
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     status: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,  // Default status is false (not attended)
+        defaultValue: false,
     },
 }, {
-    // Optionally, add timestamps for createdAt and updatedAt
     timestamps: true,
 });
 
@@ -36,5 +33,4 @@ EventParticipants.associate = (models) => {
     });
 };
 
-// Export the EventParticipants model
 module.exports = EventParticipants;

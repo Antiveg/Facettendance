@@ -6,7 +6,7 @@ async function errorHandler(err, req, res, next) {
   
     if (err.name === "SequelizeValidationError" || err.name === 'SequelizeUniqueConstraintError') {
         code = 400;
-        msg = err.errors[0].message; // dari model
+        msg = err.errors[0].message;
     } else if (err.name === "ID_NOT_FOUND") {
         code = 404;
         msg = "Id not found";
@@ -30,7 +30,6 @@ async function errorHandler(err, req, res, next) {
         msg = "Credentials is not unique";
     }
   
-    //kembalikan status code dan pesan error
     res.status(code).json({
         statusCode: code,
         error: msg,

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// Sample data to simulate user profile data after registration
 interface UserProfile {
   name: string;
   email: string;
@@ -8,12 +7,10 @@ interface UserProfile {
 }
 
 const Profile: React.FC = () => {
-    // Simulated user profile data
+
     const [userData, setUserData] = useState<UserProfile | null>(null);
 
-    // Use effect to simulate fetching user profile data on component mount
     useEffect(() => {
-        // Simulating fetching data, you would typically use an API call here
         const simulatedUserData = {
             name: 'John Doe',
             email: 'johndoe@example.com',
@@ -24,10 +21,9 @@ const Profile: React.FC = () => {
             ],
         };
 
-        setUserData(simulatedUserData); // Simulating successful data fetch
+        setUserData(simulatedUserData);
     }, []);
 
-    // Render the profile page
     return (
         <div className="profile-container">
             <h2>User Profile</h2>
@@ -37,8 +33,7 @@ const Profile: React.FC = () => {
                     <p><strong>Name:</strong> {userData.name}</p>
                     <p><strong>Email:</strong> {userData.email}</p>
                 </div>
-
-                {/* Display photos */}
+                
                 <div className="photos">
                     <h3>Uploaded Photos:</h3>
                     <div className="photo-gallery">

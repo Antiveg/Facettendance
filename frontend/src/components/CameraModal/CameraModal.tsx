@@ -19,7 +19,6 @@ const CameraModal : React.FC<CameraModalProps> = ({ onClose, id }) => {
         location: "binus alsut",
         creator: "pak felix",
         created_at: "12:00:00",
-        // join with ev.participants or ev.collaborator
         user_id: 2,
         status: "false",
         attend_img: "https://cdn.pixabay.com/photo/2016/07/07/16/46/dice-1502706_640.jpg",

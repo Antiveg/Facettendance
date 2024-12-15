@@ -21,7 +21,6 @@ const Register: React.FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
-    // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -30,7 +29,6 @@ const Register: React.FC = () => {
         });
     };
 
-    // Handle file input change for photos
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFormData({
@@ -122,7 +120,7 @@ const Register: React.FC = () => {
                     />
                 </div>
 
-                { (formData.photos != null) &&
+                {(formData.photos != null) &&
                 <div className={styles.img_container}>
                     {Array.from(formData.photos).map((photo, index) => (
                     <img key={index} src={URL.createObjectURL(photo)} alt={`photo-${index}`} className={styles.photo}/>

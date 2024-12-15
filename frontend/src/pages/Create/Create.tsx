@@ -51,8 +51,8 @@ const Create: React.FC = () => {
         const checkedValues = Array.from(checkboxes).map((checkbox) => Number(checkbox.value));
 
         const updatedEventData = {
-            ...eventData,  // Copy the existing data
-            participants: checkedValues,  // Update the participants field
+            ...eventData,  
+            participants: checkedValues,  
         };
 
         e.preventDefault();

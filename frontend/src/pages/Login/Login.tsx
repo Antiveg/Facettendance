@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
 import '../../global.css'
 import styles from './Login.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-// Define the interface for the login form data
 interface LoginFormData {
   email: string;
   password: string;
@@ -22,7 +20,6 @@ const Login: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [loginError, setLoginError] = useState('');
 
-    // Handle input change and update form data state
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({

@@ -2,40 +2,40 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // Create the user_photos table
+  
     await queryInterface.createTable('UserPhotos', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,  // Auto-increment ID
+        autoIncrement: true,
       },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',  // Reference the 'users' table
-          key: 'id',  // The 'id' column in the 'users' table
+          model: 'Users',
+          key: 'id',
         },
       },
       photo_url: {
-        type: Sequelize.STRING,  // The URL of the photo (can be a file path or URL)
-        allowNull: false,  // photo_url cannot be null
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW,  // Automatically set the createdAt timestamp
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW,  // Automatically set the updatedAt timestamp
+        defaultValue: Sequelize.NOW,
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Rollback: Drop the 'user_photos' table
+  
     await queryInterface.dropTable('UserPhotos');
   }
 };

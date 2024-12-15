@@ -2,7 +2,6 @@ import React from 'react';
 import '../../global.css'
 import styles from './About.module.css'
 
-// Functional component using TypeScript (with typed props)
 const About: React.FC = () => {
     return (
         <div className={styles.base}>

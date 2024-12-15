@@ -1,18 +1,17 @@
-// UserPhotos Model (simplified)
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../db');  // Your Sequelize connection
+const sequelize = require('../db');
 
 const UserPhotos = sequelize.define('UserPhotos', {
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: { model: 'Users', key: 'id' },  // Foreign key to User
+        references: { model: 'Users', key: 'id' },
         primaryKey: true,
     },
     photo_url: {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,  // Composite primary key with `userId`
+        primaryKey: true,
     },
     createdAt: {
         type: DataTypes.DATE,

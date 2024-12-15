@@ -7,7 +7,6 @@ import styles from './Layout.module.css'
 const Layout: React.FC = () => {
     const location = useLocation();
 
-    // Check if the current route is 'login' or 'register'
     // const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
     const isAuthPage = false
 

@@ -5,53 +5,53 @@ module.exports = {
     await queryInterface.createTable('Events', {
       id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,  // This is the primary key
-        autoIncrement: true,  // Automatically increments the id value
+        primaryKey: true,
+        autoIncrement: true,
       },
       title: {
         type: Sequelize.STRING,
-        allowNull: false,  // Title cannot be null
+        allowNull: false,
       },
       description: {
-        type: Sequelize.TEXT,  // Store the description as a long text (paragraphs)
-        allowNull: false,  // Description cannot be null
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       start_time: {
-        type: Sequelize.DATE,  // Store start time (date + time)
-        allowNull: false,  // Start time cannot be null
+        type: Sequelize.DATE,
+        allowNull: false,
       },
       end_time: {
-        type: Sequelize.DATE,  // Store end time (date + time)
-        allowNull: false,  // End time cannot be null
+        type: Sequelize.DATE,
+        allowNull: false,
       },
       location: {
-        type: Sequelize.STRING,  // Store the location info (can be a string, address, or coordinates)
-        allowNull: false,  // Location cannot be null
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       creatorId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',  // References the 'users' table
-          key: 'id',  // Referencing the 'id' column of the 'users' table
+          model: 'Users',
+          key: 'id',
         },
-        allowNull: false,  // Creator ID cannot be null
-        onDelete: 'CASCADE',  // If the creator is deleted, the event will be deleted as well
+        allowNull: false,
+        onDelete: 'CASCADE',
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW,  // Automatically set the createdAt timestamp
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW,  // Automatically set the updatedAt timestamp
+        defaultValue: Sequelize.NOW,
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Rollback: Drop the 'events' table
+  
     await queryInterface.dropTable('Events');
   }
 };

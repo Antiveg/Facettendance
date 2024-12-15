@@ -6,39 +6,38 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,  // Auto-increment ID
+        autoIncrement: true,
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false,  // Name is required
+        allowNull: false,
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,  // Password is required
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
-        allowNull: false,  // Email is required
+        allowNull: false,
       },
       face_data: {
-        type: Sequelize.ARRAY(Sequelize.FLOAT),  // Store an array of floats for face data
-        allowNull: true,  // Face data is optional
+        type: Sequelize.ARRAY(Sequelize.FLOAT),
+        allowNull: true,
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW,  // Automatically set createdAt field
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.NOW,  // Automatically set updatedAt field
+        defaultValue: Sequelize.NOW,
       }
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    // If rolling back the migration, drop the 'users' table
     await queryInterface.dropTable('Users');
   }
 };

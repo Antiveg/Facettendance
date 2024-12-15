@@ -155,7 +155,7 @@ class WebcamOverlayApp(QMainWindow):
             print("match index: ", matchIndex)
 
             if matches[matchIndex]:
-
+                
                 print('Known Face Detected')
                 print(faceLoc)
 
@@ -181,7 +181,7 @@ class WebcamOverlayApp(QMainWindow):
                 elif end_time < current_time:
                     content = f"YOU CAN'T DO ATTENDANCE\n The Event Has Passed..."
                 elif event_info['location'] != 'Jakarta':
-                    content = f"YOU CAN'T DO ATTENDANCE\nThe Event Located in Jakarta"
+                    content = f"YOU CAN'T DO ATTENDANCE\nYou're at Jakarta,\n but the event is at {event_info['location']}"
                 else:
                     people[int(self.idList[matchIndex])]['last_attendance_time'] = QDateTime.currentDateTime().toString()
 

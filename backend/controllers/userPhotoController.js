@@ -7,3 +7,5 @@ const getPhotosByUserId = async (req, res, next) => {
         next(error)
     }
 }
+
+module.exports = { getPhotosByUserId }
